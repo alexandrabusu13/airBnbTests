@@ -8,7 +8,6 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-
     pageLoadTimeout: 20000,
     requestTimeout: 10000,
     responseTimeout: 10000,
@@ -16,6 +15,7 @@ export default defineConfig({
     video: false,
     screenshotOnRunFailure: false,
     chromeWebSecurity: false,
+    scrollBehavior: 'nearest',
     retries: {
       // Configure retry attempts for `cypress run`
       // Default is 0
