@@ -64,8 +64,14 @@ describe('Sector labs Test', () => {
     const fullCheckinDate = `${fullYear}-${calculateCheckInDate()[1]}-${checkInDate}`;
     const fullCheckoutDate = `${fullYear}-${calculateCheckoutDate()[1]}-${checkOutDate}`;
 
-    const houseType = ["Entire rental unit in", "Entire condo in", "Private room in rental unit in", "Entire home in"];
-    const fullResultTitle = houseType.map(type => `${type} ${location}`)
+    const houseTypes = ["Apartment in ", "Condo in ", "Home in ", "Vacation home in ", "Villa in ", "Loft in "];
+    const locationsInRome = ["Tuscolano", "Trionfale", "Trieste", "Monti", "Esquilino", "Rome", "Trastevere", "Prati", "Flaminio", "Appio Latino", "Primavalle"];
+    const validCombinations = [];
+    houseTypes.forEach(houseType => {locationsInRome.forEach(location => {
+        validCombinations.push(`${houseType}${location}`);
+    });})
+
+    const numberOfBeds = ["2 beds", "3 beds", "4 beds"];
 
     before(() => {
         cy.fixture('testData').then((data) => {
@@ -94,11 +100,15 @@ describe('Sector labs Test', () => {
         SearchPage.searchButton().click();
     })
 
-
     it('Test1: Verify that the results match the search criteria', () => {
-        // aici mai trebe sa ma uit sa verific ca is in roma si ca au cel putin loc de 3 pers
-        expect(SearchPage.searchResultsContainer().should('be.visible'))
-    })
+        SearchPage.searchResultsTitle().invoke('text').then((text) =>{
+            expect(validCombinations).to.include(text.trim());
+        });
+
+        SearchPage.searchResultsNoOfBeds().invoke('text').then((text) =>{
+            expect(numberOfBeds).to.include(text.trim());
+        })
+    });
 
     it('Test 2: Verify that the results and details page match the extra filters', () => {
         SearchPage.filtersButton().click();

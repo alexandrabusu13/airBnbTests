@@ -1,7 +1,7 @@
 class SearchPage {
     locationInput() {
-        return cy.get('#bigsearch-query-location-input')
-        // return cy.get('input[placeholder="Search destinations"]');
+        // return cy.get('#bigsearch-query-location-input')
+        return cy.get('input[placeholder="Search destinations"]');
     }
 
     checkInInput() {
@@ -67,6 +67,15 @@ class SearchPage {
     closeTranslationsModal() {
         return cy.get('button[aria-label="Close"]')
     }
+
+    searchResultsTitle() {
+        return cy.get('div[itemprop="itemListElement"] div.g1qv1ctd  div.t1jojoys')
+    }
+
+    searchResultsNoOfBeds() {
+        return cy.get('div[itemprop="itemListElement"] div.g1qv1ctd  div.fb4nyux span span[aria-hidden="true"] span').contains('beds');
+    }
+
 }
 
 export default new SearchPage();
